@@ -1,0 +1,89 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "g++ compile all",
+			"command": "g++",
+			"args": [
+				"-g",
+				"-c",
+				"${workspaceFolder}/**.cpp",
+				"${workspaceFolder}/**/**.cpp",
+				"${workspaceFolder}/**/**/**.cpp",
+				//"${workspaceFolder}/**/**/**/**.cpp",
+				//"${workspaceFolder}/libs/**.c",
+				"-I${workspaceFolder}",
+				"-I${workspaceFolder}/../Engine",
+				"-I${workspaceFolder}/../Engine/include",
+				//"-I${workspaceFolder}/include",
+				"-D",
+				"DEBUG",
+				"-D",
+				"LINUX",
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/build/debug"
+			},
+		},
+		{
+			"type": "cppbuild",
+			"label": "g++ compile file",
+			"command": "g++",
+			"args": [
+				"-g",
+				"-c",
+				"${file}",
+				"-I${workspaceFolder}",
+				"-I${workspaceFolder}/../Engine",
+				"-I${workspaceFolder}/../Engine/include",
+				//"-I${workspaceFolder}/include",
+				"-D",
+				"DEBUG",
+				"-D",
+				"LINUX",
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/build/debug"
+			},
+		},
+		{
+			"type": "cppbuild",
+			"label": "g++ link",
+			"command": "g++",
+			"args": [
+				"${workspaceFolder}/build/debug/**.o",
+				"${workspaceFolder}/../Engine/build/debug/**.o",
+				"-L${workspaceFolder}/../Engine/libs",
+				"-lglfw",
+				"-lassimp",
+				"-o",
+				"${workspaceFolder}/build/debug/main",
+			],
+		},
+		{
+			"label": "g++ build all",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"g++ compile all",
+				"g++ link",
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "g++ build file",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"g++ compile all",
+				"g++ link",
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}
